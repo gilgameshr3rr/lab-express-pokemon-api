@@ -22,7 +22,7 @@ app.get("/pokemon/:id", (req, res) => {
 
 });
 
-// app.get("/pokemon/search", (req, res) => {
+// app.get("/search", (req, res) => {
 //     const {name} = req.query; 
 //     const searchPokemon = allPokemon.filter(
 //         (currentElement) => currentElement.name.toLowerCase().includes(name.toLowerCase())
@@ -31,6 +31,15 @@ app.get("/pokemon/:id", (req, res) => {
 //     return res.status(200).json(searchPokemon);
 // })
 
+app.delete("/delete/:id", (req, res) => {
+    const {id} = req.params;
+    const deletePokemon = allPokemon.find(
+        (currentElement) => currentElement.id.toString() === id);
+
+    allPokemon.splice(allPokemon.indexOf(deletePokemon), 1);
+
+    return res.status(200).json(deletePokemon);
+})
 // -- Define your route listeners here! --
 
 app.listen(PORT, () => console.log(`Server up and running at port ${PORT}`));
