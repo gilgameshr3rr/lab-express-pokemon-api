@@ -24,15 +24,36 @@ app.get("/pokemon/:id", (req, res) => {
 
 });
 
-// app.get("/search", (req, res) => {
-//     const {name, types} = req.query; 
-//     const searchPokemon = allPokemon.filter(
-//         (currentElement) => currentElement.name.includes(name.toLowerCase()) && currentElement.types.includes(types.toLowerCase())
-        
-//     );
+app.get("/search", (req, res) => {
+    const {name, types} = req.query; 
+    const searchPokemon = allPokemon.filter(
+        name ?
+        (currentElement) => currentElement.name === name.toLowerCase()
+        :
+        (currentElement) => currentElement.types.includes(types.toLowerCase())    
+    );
 
-//     return res.status(200).json(searchPokemon);
-// })
+    return res.status(200).json(searchPokemon);
+})
+
+// suggested solution
+
+// router.get("/search", (req, res) => {
+//     if (Object.keys(req.query)[0] === "name") {
+//       const foundedPokemon = allPokemon.filter((currentPokemon) => {
+//         return currentPokemon.name.includes(req.query.name);
+//       });
+//       return res.status(200).json(foundedPokemon);
+//     } else if (Object.keys(req.query)[0] === "types") {
+//       const foundedPokemon = allPokemon.filter((currentPokemon) => {
+//         return currentPokemon.types.includes(req.query.types);
+//       });
+  
+//       return res.status(200).json(foundedPokemon);
+//     }
+  
+//     return res.status(400).json({ msg: "Mande a query direito!" });
+// });
 
 app.delete("/delete/:id", (req, res) => {
     const {id} = req.params;
